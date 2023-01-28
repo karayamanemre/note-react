@@ -75,6 +75,7 @@ button {
 .note {
   display: flex;
   flex-direction: column;
+  min-width: 250px;
   max-width: 400px;
   align-items: flex-start;
   justify-content: flex-start;
