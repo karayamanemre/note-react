@@ -66,14 +66,14 @@ function NoteTaker() {
           />
           <button type="submit" className='add-btn'>Add Note</button>
         </form>
+        <input type="text" placeholder="Filter by tag" onChange={handleFilterByTag} />
       </section>
       <section className='notes-container'>
-        <input type="text" placeholder="Filter by tag" onChange={handleFilterByTag} />
         {filteredNotes.map((note, index) => (
           <div className="note" key={index}>
-            <h3>{note.title}</h3>
-            <p>{note.body}</p>
-            <p>Tags: {note.tags.join(', ')}</p>
+            <h3 className='note-title'>{note.title}</h3>
+            <p className='note-text'>{note.body}</p>
+            <p className='tags'>Tags: {note.tags.join(', ')}</p>
             <button className='delete-btn' onClick={() => handleDeleteNote(index)}>Delete</button>
           </div>
         ))}
