@@ -64,18 +64,20 @@ function NoteTaker() {
             value={tags}
             onChange={(e) => setTags(e.target.value)}
           />
-          <button type="submit">Add Note</button>
+          <button type="submit" className='add-btn'>Add Note</button>
         </form>
       </section>
-      <input type="text" placeholder="Filter by tag" onChange={handleFilterByTag} />
-      {filteredNotes.map((note, index) => (
-        <div className="note" key={index}>
-          <h3>{note.title}</h3>
-          <p>{note.body}</p>
-          <p>Tags: {note.tags.join(', ')}</p>
-          <button className="delete" onClick={() => handleDeleteNote(index)}>Delete</button>
-        </div>
-      ))}
+      <section className='notes-container'>
+        <input type="text" placeholder="Filter by tag" onChange={handleFilterByTag} />
+        {filteredNotes.map((note, index) => (
+          <div className="note" key={index}>
+            <h3>{note.title}</h3>
+            <p>{note.body}</p>
+            <p>Tags: {note.tags.join(', ')}</p>
+            <button className='delete-btn' onClick={() => handleDeleteNote(index)}>Delete</button>
+          </div>
+        ))}
+      </section>
     </div>
   );
 }

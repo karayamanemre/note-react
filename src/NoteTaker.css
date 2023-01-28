@@ -23,7 +23,8 @@ body {
   gap: 10px;
 }
 
-.form-container {
+.form-container,
+.notes-container {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -53,35 +54,39 @@ textarea {
 }
 
 button {
-  width: 300px;
-  background-color: #4caf50;
-  color: white;
   padding: 14px 20px;
-  margin: 8px 0;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 
-button:hover {
+.add-btn {
+  width: 300px;
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.add-btn:hover {
   background-color: #45a049;
 }
 
 .note {
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
   padding: 10px;
-  background-color: #eee;
+  background-color: #ddd;
 }
 
-.note h3 {
-  margin-top: 0;
+.delete-btn {
+  width: 100px;
+  background-color: #771111;
+  color: #fff;
 }
 
-button.delete {
-  background-color: red;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer;
+.delete-btn:hover {
+  background-color: #991111;
 }
