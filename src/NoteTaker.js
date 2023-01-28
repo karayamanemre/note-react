@@ -8,6 +8,8 @@ function NoteTaker() {
   const [tags, setTags] = useState("");
   const [filterTag, setFilterTag] = useState("");
   const [filteredNotes, setFilteredNotes] = useState([]);
+  const [editing, setEditing] = useState(false);
+  const [editIndex, setEditIndex] = useState(null);
 
   useEffect(() => {
     const storedNotes = localStorage.getItem("notes");
@@ -23,6 +25,22 @@ function NoteTaker() {
   useEffect(() => {
     setFilteredNotes(filterTag ? notes.filter(note => note.tags.includes(filterTag.trim())) : notes);
   }, [notes, filterTag]);
+  
+  function handleEditNote(index) {
+      setEditing(true);
+      setEditIndex(index);
+      const selectedNote = notes[index];
+      setTitle(selectedNote.title);
+      setBody(selectedNote.body);
+      setTags(selectedNote.tags.join(','));
+  }
+
+  function handleCancelEdit() {
+  setEditing(false);
+  setTitle("");
+  setBody("");
+  setTags("");
+  }
 
   function handleFilterByTag(e) {
     setFilterTag(e.target.value);
@@ -30,7 +48,14 @@ function NoteTaker() {
 
   function handleAddNote(e) {
     e.preventDefault();
-    setNotes([...notes, { title, body, tags: tags.split(',').map(tag => tag.trim()) }]);
+    if (editing) {
+        const updatedNotes = [...notes];
+        updatedNotes[editIndex] = { title, body, tags: tags.split(',').map(tag => tag.trim()) };
+        setNotes(updatedNotes);
+        setEditing(false);
+    } else {
+        setNotes([...notes, { title, body, tags: tags.split(',').map(tag => tag.trim()) }]);
+    }
     setTitle("");
     setBody("");
     setTags("");
@@ -48,24 +73,25 @@ function NoteTaker() {
         <h2>Your Note</h2>
         <form onSubmit={handleAddNote}>
           <input
-            type="text"
-            placeholder="Note title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+              type="text"
+              placeholder="Note title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
           />
           <textarea
-            placeholder="Note description"
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
+              placeholder="Note description"
+              value={body}
+              onChange={(e) => setBody(e.target.value)}
           />
           <input
-            type="text"
-            placeholder="Tags (comma-separated)"
-            value={tags}
-            onChange={(e) => setTags(e.target.value)}
+              type="text"
+              placeholder="Tags (comma-separated)"
+              value={tags}
+              onChange={(e) => setTags(e.target.value)}
           />
-          <button type="submit" className='add-btn'>Add Note</button>
-        </form>
+          <button type="submit" className='add-btn'>{editing ? 'Save Changes' : 'Add Note'}</button>
+          {editing && <button onClick={handleCancelEdit}>Cancel Edit</button>}
+      </form>
         <input type="text" placeholder="Filter by tag" onChange={handleFilterByTag} />
       </section>
       <section className='notes-container'>
@@ -75,6 +101,7 @@ function NoteTaker() {
             <p className='note-text'>{note.body}</p>
             <p className='tags'>Tags: {note.tags.join(', ')}</p>
             <button className='delete-btn' onClick={() => handleDeleteNote(index)}>Delete</button>
+            <button className='edit-btn' onClick={() => handleEditNote(index)}>Edit</button>
           </div>
         ))}
       </section>
