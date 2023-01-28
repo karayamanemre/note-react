@@ -77,11 +77,13 @@ function NoteTaker() {
               placeholder="Note title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              required
           />
           <textarea
               placeholder="Note description"
               value={body}
               onChange={(e) => setBody(e.target.value)}
+              required
           />
           <input
               type="text"
