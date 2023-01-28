@@ -17,21 +17,29 @@ body {
   align-items: center;
   justify-content: center;
   gap: 10px;
+  z-index: 1;
+}
+
+.form-container-x {
+  display: none;
+  z-index: 999;
 }
 
 .form-container {
-  display: flex;
+  position: fixed;
+  display: block;
   flex-direction: column;
-  gap: 10px;
-  padding: 25px;
   align-items: center;
   justify-content: center;
 }
 
-form {
+.form {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  background: #aaa;
+  padding: 15px;
+  border-radius: 4px;
 }
 
 input,
@@ -64,12 +72,14 @@ button {
 .add-btn:hover {
   background-color: #45a049;
 }
+
 .notes-container {
   display: flex;
   gap: 20px;
   padding: 25px;
   align-items: flex-start;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .note {

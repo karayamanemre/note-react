@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import './NoteTaker.css';
 
 function NoteTaker() {
-  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [formOpen, setFormOpen] = useState(false);
   const [notes, setNotes] = useState([]);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -26,9 +26,17 @@ function NoteTaker() {
   useEffect(() => {
     setFilteredNotes(filterTag ? notes.filter(note => note.tags.includes(filterTag.trim())) : notes);
   }, [notes, filterTag]);
+
+  function openForm() {
+    setFormOpen(true);
+  }
+
+  function closeForm() {
+    setFormOpen(false);
+  }
   
   function handleEditNote(index) {
-    setIsFormOpen(true);
+    setFormOpen(true);
     setEditing(true);
     setEditIndex(index);
     const selectedNote = notes[index];
@@ -38,7 +46,7 @@ function NoteTaker() {
   }
 
   function handleCancelEdit() {
-    setIsFormOpen(false);
+    setFormOpen(false);
     setEditing(false);
     setTitle("");
     setBody("");
@@ -72,36 +80,34 @@ function NoteTaker() {
 
   return (
     <div className='main'>
-      <button onClick={() => setIsFormOpen(!isFormOpen)}>{isFormOpen ? 'Close Form' : 'Open Form'}</button>
-      {isFormOpen && (
-        <section className='form-container'>
-          <h2>Your Note</h2>
-          <form onSubmit={handleAddNote}>
-            <input
-                type="text"
-                placeholder="Note title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                required
-            />
-            <textarea
-                placeholder="Note description"
-                value={body}
-                onChange={(e) => setBody(e.target.value)}
-                required
-            />
-            <input
-                type="text"
-                placeholder="Tags (comma-separated)"
-                value={tags}
-                onChange={(e) => setTags(e.target.value)}
-            />
-            <button type="submit" className='add-btn'>{editing ? 'Save Changes' : 'Add Note'}</button>
-            {editing && <button onClick={handleCancelEdit}>Cancel Edit</button>}
+      {!formOpen && <button onClick={openForm}>Open Form</button>}
+      {formOpen && <button onClick={closeForm}>Close Form</button>}
+      <section className={`form-container-x ${formOpen ? 'form-container' : ''}`}>
+        <form onSubmit={handleAddNote} className='form'>
+          <input
+              type="text"
+              placeholder="Note title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+          />
+          <textarea
+              placeholder="Note description"
+              value={body}
+              onChange={(e) => setBody(e.target.value)}
+              required
+          />
+          <input
+              type="text"
+              placeholder="Tags (comma-separated)"
+              value={tags}
+              onChange={(e) => setTags(e.target.value)}
+          />
+          <button type="submit" className='add-btn' onClick={closeForm}>{editing ? 'Save Changes' : 'Add Note'}</button>
+          {editing && <button onClick={handleCancelEdit}>Cancel Edit</button>}
         </form>
-          <input type="text" placeholder="Filter by tag" onChange={handleFilterByTag} />
-        </section>
-      )}
+      </section>
+      <input type="text" placeholder="Filter by tag" onChange={handleFilterByTag} />
       <section className='notes-container'>
         {filteredNotes.map((note, index) => (
           <div className="note" key={index}>
