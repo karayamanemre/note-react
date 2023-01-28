@@ -4,4 +4,4 @@
 - Run `npm install` to install the dependencies.
 - Run `npm start` to start the app.
 
-(live demo)[https://note-react-karayamanemre.netlify.app/]
+[live demo](https://note-react-karayamanemre.netlify.app/)
