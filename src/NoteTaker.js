@@ -33,6 +33,9 @@ function NoteTaker() {
 
   function closeForm() {
     setFormOpen(false);
+    setTitle("");
+    setBody("");
+    setTags("");
   }
   
   function handleEditNote(index) {
